@@ -1,7 +1,14 @@
+﻿<!DOCTYPE html >
+<html lang="ar" >
+<head >
+<meta charset="UTF-8" >
+<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+<title > Kaafo Community</title >
+<style >
 body {
-    background-color: #1e1e2f;
-    color: white;
-    font-family: Arial;
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,17 +16,62 @@ body {
     margin: 0;
 }
 
-.center {
+.container {
     text-align: center;
+    background-color: #fff;
+    padding: 40px 60px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
 }
 
-a {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #7289da;
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    margin-top: 20px;
-    border-radius: 8px;
+h1 {
+    font-size: 40px;
+    color: #3498db;
+    margin-bottom: 20px;
 }
+
+p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+img {
+    width: 150px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 200px;
+}
+
+    button:hover {
+        background-color: #2980b9;
+    }
+
+</style >
+</head >
+<body >
+<div class="container" >
+<h1 > مرحبا بك فـ Kaafo Community</h1 >
+<!-- Logo Image -->
+<img src="images/logo.png" alt="Logo" >
+<p > انضم للديسكورد ديالنا!</p >
+<!-- Join Discord Button -->
+<a href="https://discord.gg/ZSvMDC6sht" target="_blank" >
+<button > انضم الآن</button >
+</a >
+</div >
+</body >
+</html >
