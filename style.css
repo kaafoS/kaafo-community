@@ -60,18 +60,30 @@ button {
         background-color: #2980b9;
     }
 
+.description {
+    font-size: 16px;
+    color: #777;
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
 </style >
 </head >
 <body >
 <div class="container" >
-<h1 > مرحبا بك فـ Kaafo Community</h1 >
+<h1 > مرحبا بك فـ KaafoS Community</h1 >
 <!-- Logo Image -->
 <img src="images/logo.png" alt="Logo" >
-<p > انضم للديسكورد ديالنا!</p >
+<p > انضم لديسكورد ديالنا</p >
 <!-- Join Discord Button -->
 <a href="https://discord.gg/ZSvMDC6sht" target="_blank" >
 <button > انضم الآن</button >
 </a >
+<!-- Description Text -->
+<div class="description" >
+<p > ديما على آخر التحديثات فـ KaafoS Community! انضموا لينا وكونوا جزء من مغامراتنا.</p >
+<p > التحديثات و المستجدات كاينة دائماً ف Discord ديالنا.</p >
+</div >
 </div >
 </body >
 </html >
