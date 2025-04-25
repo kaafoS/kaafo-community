@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up</title>
   <style>
     body { text-align: center; font-family: Arial; margin-top: 100px; }
@@ -22,7 +21,7 @@
 
   <script>
     function register() {
-      const username = document.getElementById("username").value;
+      const username = document.getElementById("username").value.trim();
       const date = document.getElementById("date").value;
       const password = document.getElementById("password").value;
       const confirm = document.getElementById("confirm").value;
@@ -43,9 +42,9 @@
         return;
       }
 
-      users[username] = { password, date, coins: 100 };
+      users[username] = { password, date, coins: 100, role: "user" };
       localStorage.setItem("users", JSON.stringify(users));
-      alert("Account created successfully!");
+      alert("✅ Account created successfully!");
       window.location.href = "signin.html";
     }
   </script>

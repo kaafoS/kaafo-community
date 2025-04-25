@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard | Chatbox</title>
   <style>
     body {
@@ -12,96 +11,57 @@
       height: 100vh;
       background: #36393f;
     }
-
     .sidebar {
       width: 260px;
       background: #2f3136;
       color: #fff;
       padding: 20px;
     }
-
-    .sidebar h2 {
-      margin-bottom: 10px;
-    }
-
-    .user-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .user-list li {
-      padding: 5px 0;
-      font-size: 14px;
-    }
-
+    .sidebar h2 { margin-bottom: 10px; }
+    .user-list { list-style: none; padding: 0; margin: 0; }
+    .user-list li { padding: 5px 0; font-size: 14px; }
     .main {
       flex-grow: 1;
       display: flex;
       flex-direction: column;
       padding: 20px;
-      background: #36393f;
     }
-
     .chat-box {
       flex-grow: 1;
       overflow-y: auto;
       margin-bottom: 10px;
       padding-right: 10px;
     }
-
     .message {
-      display: flex;
-      flex-direction: column;
+      background: #2f3136;
       margin-bottom: 16px;
-      max-width: 70%;
-      background-color: #2f3136;
       padding: 10px 15px;
       border-radius: 12px;
       color: #dcddde;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      max-width: 70%;
     }
-
-    .message b {
-      color: white;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
     .chat-input-area {
       display: flex;
       padding-top: 10px;
     }
-
     .chat-input {
       flex-grow: 1;
       padding: 12px;
       border-radius: 8px;
+      background: #40444b;
       border: none;
-      font-size: 15px;
-      background-color: #40444b;
       color: white;
     }
-
-    .chat-input::placeholder {
-      color: #aaa;
-    }
-
+    .chat-input::placeholder { color: #aaa; }
     .send-button {
       padding: 12px 20px;
       background: #7289da;
-      color: #fff;
       border: none;
       border-radius: 8px;
       margin-left: 10px;
+      color: white;
       cursor: pointer;
-      transition: 0.2s ease;
     }
-
-    .send-button:hover {
-      background: #5b6eae;
-    }
-
     .store-button {
       margin-top: 20px;
       padding: 10px;
@@ -112,18 +72,8 @@
       color: white;
       font-size: 16px;
       cursor: pointer;
-      transition: 0.3s ease;
     }
-
-    .store-button:hover {
-      transform: scale(1.05);
-    }
-
-    .store {
-      display: none;
-      margin-top: 10px;
-    }
-
+    .store { display: none; margin-top: 10px; }
     .store-item {
       background: #202225;
       padding: 10px;
@@ -131,30 +81,24 @@
       margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      color: white;
     }
-
     .redeem-section {
       margin-top: 15px;
     }
-
     input[type="text"] {
       padding: 6px;
       border-radius: 5px;
-      border: none;
       background: #40444b;
+      border: none;
       color: white;
     }
-
     .redeem-button {
       padding: 6px 12px;
       background: #43b581;
-      color: white;
       border: none;
       border-radius: 6px;
       margin-left: 5px;
-      cursor: pointer;
+      color: white;
     }
   </style>
 </head>
@@ -162,11 +106,11 @@
   <div class="sidebar">
     <h2>👥 Users</h2>
     <ul class="user-list"></ul>
-    <hr />
+    <hr/>
     <p><b>👤 Username:</b> <span id="usernameDisplay"></span></p>
     <p><b>🪙 Coins:</b> <span id="coin-count"></span></p>
     <button class="store-button" onclick="toggleStore()">🛒 Open Store</button>
-    <div class="store" id="store">
+    <div id="store" class="store">
       <div class="store-item">Member - 50k <button onclick="buyRole('Member')">Buy</button></div>
       <div class="store-item">VIP - 120k <button onclick="buyRole('VIP')">Buy</button></div>
       <div class="store-item">Admin - 600k <button onclick="buyRole('Admin')">Buy</button></div>
@@ -203,8 +147,9 @@
 
       const users = JSON.parse(localStorage.getItem("users")) || {};
       if (!users[username]) {
-        users[username] = { password: "", coins: 100, role: "user" };
-        localStorage.setItem("users", JSON.stringify(users));
+        alert("User not found!");
+        window.location.href = "signin.html";
+        return;
       }
 
       const user = users[username];
@@ -229,7 +174,7 @@
 
       sendBtn.addEventListener("click", () => {
         const msg = chatInput.value.trim();
-        if (msg.length === 0) return;
+        if (!msg) return;
 
         const cost = msg.length;
         if (user.coins < cost) {
@@ -243,22 +188,10 @@
         chat.appendChild(newMsg);
         chat.scrollTop = chat.scrollHeight;
 
-        user.coins -= cost;
-        user.coins += msg.length * 10;
+        user.coins = user.coins - cost + msg.length * 10;
         localStorage.setItem("users", JSON.stringify(users));
         coinCount.textContent = user.coins;
-
         chatInput.value = "";
-        lastLength = 0;
-      });
-
-      chatInput.addEventListener("input", () => {
-        const typedLength = chatInput.value.length;
-        if (typedLength < lastLength) {
-          lastLength = typedLength;
-          return;
-        }
-        lastLength = typedLength;
       });
 
       window.toggleStore = () => {
@@ -267,21 +200,16 @@
       };
 
       window.buyRole = (role) => {
-        const prices = {
-          Member: 50000,
-          VIP: 120000,
-          Admin: 600000,
-          Geron: 1000000
-        };
+        const prices = { Member: 50000, VIP: 120000, Admin: 600000, Geron: 1000000 };
         if (user.coins < prices[role]) {
           alert("❌ Not enough coins!");
           return;
         }
         user.coins -= prices[role];
-        const code = `${role}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+        const code = `${role}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+        localStorage.setItem("roleCode", code);
         localStorage.setItem("users", JSON.stringify(users));
         alert(`✅ Purchased! Use code: ${code}`);
-        localStorage.setItem("roleCode", code);
         coinCount.textContent = user.coins;
       };
 
