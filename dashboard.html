@@ -1,156 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>KaafoS Chatbox</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard | Chatbox</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
+      display: flex;
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: url('https://xmple.com/wallpaper/blue-black-gradient-linear-3840x2160-c2-000953-000001-a-330-f-14.svg') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
+      height: 100vh;
+      background: #36393f;
     }
 
-    .main-section {
+    .sidebar {
+      width: 260px;
+      background: #2f3136;
+      color: #fff;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 10px;
+    }
+
+    .user-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .user-list li {
+      padding: 5px 0;
+      font-size: 14px;
+    }
+
+    .main {
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 60px 20px 30px;
-      text-align: center;
+      padding: 20px;
+      background: #36393f;
     }
 
-    .main-section img {
-      width: 140px;
-      border-radius: 15px;
-      margin-bottom: 20px;
+    .chat-box {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      padding-right: 10px;
     }
 
-    .main-section h1 {
-      font-size: 42px;
-      color: #1abc9c;
-      text-shadow: 0 0 8px #1abc9c;
+    .message {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+      max-width: 70%;
+      background-color: #2f3136;
+      padding: 10px 15px;
+      border-radius: 12px;
+      color: #dcddde;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
 
-    .main-section p {
-      font-size: 18px;
-      color: #ccc;
-      max-width: 700px;
+    .message b {
+      color: white;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .chat-input-area {
+      display: flex;
+      padding-top: 10px;
+    }
+
+    .chat-input {
+      flex-grow: 1;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      font-size: 15px;
+      background-color: #40444b;
+      color: white;
+    }
+
+    .chat-input::placeholder {
+      color: #aaa;
+    }
+
+    .send-button {
+      padding: 12px 20px;
+      background: #7289da;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .send-button:hover {
+      background: #5b6eae;
+    }
+
+    .store-button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .store-button:hover {
+      transform: scale(1.05);
+    }
+
+    .store {
+      display: none;
       margin-top: 10px;
     }
 
-    .form-section {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 40px;
-      padding: 40px 20px;
-    }
-
-    .form-box {
-      background-color: rgba(0, 0, 0, 0.75);
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 25px rgba(0,0,0,0.6);
-      width: 320px;
-    }
-
-    .form-box h2 {
-      margin-bottom: 20px;
-      color: #1abc9c;
-    }
-
-    .form-box input {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: none;
+    .store-item {
+      background: #202225;
+      padding: 10px;
       border-radius: 8px;
-      font-size: 16px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
     }
 
-    .form-box button {
-      width: 100%;
-      padding: 12px;
-      background: #1abc9c;
+    .redeem-section {
+      margin-top: 15px;
+    }
+
+    input[type="text"] {
+      padding: 6px;
+      border-radius: 5px;
       border: none;
-      border-radius: 10px;
+      background: #40444b;
       color: white;
-      font-size: 16px;
-      box-shadow: 0 0 10px #1abc9c;
+    }
+
+    .redeem-button {
+      padding: 6px 12px;
+      background: #43b581;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-left: 5px;
       cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .form-box button:hover {
-      background: #16a085;
-      box-shadow: 0 0 15px #16a085;
-    }
-
-    .discord-btn {
-      margin-top: 30px;
-      display: inline-block;
-      padding: 12px 30px;
-      font-size: 16px;
-      background: #7289da;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #7289da;
-      transition: 0.3s;
-    }
-
-    .discord-btn:hover {
-      background: #5b6eae;
-      box-shadow: 0 0 15px #5b6eae;
-    }
-
-    .footer {
-      text-align: center;
-      color: #888;
-      padding: 20px;
-      font-size: 14px;
     }
   </style>
 </head>
 <body>
-
-  <div class="main-section">
-    <img src="YOUR_LOGO_HERE.png" alt="Kaafos Logo"> 
-    <p>Chat realtime m3a friends dyalk f community dialna. Ila 3andek account dkhl, ila la tsajel daba!</p>
-
-    <a href="https://discord.gg/ZSvMDC6sht" target="_blank" class="discord-btn">Join PARANOIA Discord</a>
-  </div>
-
-  <div class="form-section">
-    <div class="form-box">
-      <h2>Sign In</h2>
-      <form action="dashboard.html">
-        <input type="text" placeholder="Username" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Enter Chat</button>
-      </form>
-    </div>
-
-    <div class="form-box">
-      <h2>Sign Up</h2>
-      <form action="dashboard.html">
-        <input type="text" placeholder="Username" required>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Create Account</button>
-      </form>
+  <div class="sidebar">
+    <h2>👥 Users</h2>
+    <ul class="user-list"></ul>
+    <hr />
+    <p><b>👤 Username:</b> <span id="usernameDisplay"></span></p>
+    <p><b>🪙 Coins:</b> <span id="coin-count"></span></p>
+    <button class="store-button" onclick="toggleStore()">🛒 Open Store</button>
+    <div class="store" id="store">
+      <div class="store-item">Member - 50k <button onclick="buyRole('Member')">Buy</button></div>
+      <div class="store-item">VIP - 120k <button onclick="buyRole('VIP')">Buy</button></div>
+      <div class="store-item">Admin - 600k <button onclick="buyRole('Admin')">Buy</button></div>
+      <div class="store-item">Geron - 1M <button onclick="buyRole('Geron')">Buy</button></div>
+      <div class="redeem-section">
+        <input type="text" id="codeInput" placeholder="Enter code" />
+        <button class="redeem-button" onclick="redeemCode()">Redeem</button>
+      </div>
     </div>
   </div>
 
-  <div class="footer">
-    Powered by KaafoS & PARANOIA Community © 2025
+  <div class="main">
+    <div class="chat-box" id="chat"></div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" placeholder="Type your message..." />
+      <button class="send-button">Send</button>
+    </div>
   </div>
 
+  <script>
+    const roleColors = {
+      "user": "#aaa",
+      "Member": "#00bfff",
+      "VIP": "gold",
+      "Admin": "#ff5e5e",
+      "Geron": "purple"
+    };
+
+    let lastLength = 0;
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("currentUser");
+      if (!username) return window.location.href = "signin.html";
+
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      if (!users[username]) {
+        users[username] = { password: "", coins: 100, role: "user" };
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+
+      const user = users[username];
+      const chat = document.getElementById("chat");
+      const userList = document.querySelector(".user-list");
+      const coinCount = document.getElementById("coin-count");
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const chatInput = document.querySelector(".chat-input");
+      const sendBtn = document.querySelector(".send-button");
+
+      usernameDisplay.textContent = username;
+      coinCount.textContent = user.coins;
+
+      const userLi = document.createElement("li");
+      userLi.innerHTML = `<span style="color:${roleColors[user.role]}">@${username} [${user.role}]</span>`;
+      userList.appendChild(userLi);
+
+      const welcome = document.createElement("div");
+      welcome.className = "message";
+      welcome.innerHTML = `<b style="color:${roleColors[user.role]}">@${username}</b> Salam 3likom 🙌`;
+      chat.appendChild(welcome);
+
+      sendBtn.addEventListener("click", () => {
+        const msg = chatInput.value.trim();
+        if (msg.length === 0) return;
+
+        const cost = msg.length;
+        if (user.coins < cost) {
+          alert("❌ Ma3ndkch coins kafiya!");
+          return;
+        }
+
+        const newMsg = document.createElement("div");
+        newMsg.className = "message";
+        newMsg.innerHTML = `<b style="color:${roleColors[user.role]}">@${username}</b> ${msg}`;
+        chat.appendChild(newMsg);
+        chat.scrollTop = chat.scrollHeight;
+
+        user.coins -= cost;
+        user.coins += msg.length * 10;
+        localStorage.setItem("users", JSON.stringify(users));
+        coinCount.textContent = user.coins;
+
+        chatInput.value = "";
+        lastLength = 0;
+      });
+
+      chatInput.addEventListener("input", () => {
+        const typedLength = chatInput.value.length;
+        if (typedLength < lastLength) {
+          lastLength = typedLength;
+          return;
+        }
+        lastLength = typedLength;
+      });
+
+      window.toggleStore = () => {
+        const store = document.getElementById("store");
+        store.style.display = store.style.display === "none" ? "block" : "none";
+      };
+
+      window.buyRole = (role) => {
+        const prices = {
+          Member: 50000,
+          VIP: 120000,
+          Admin: 600000,
+          Geron: 1000000
+        };
+        if (user.coins < prices[role]) {
+          alert("❌ Not enough coins!");
+          return;
+        }
+        user.coins -= prices[role];
+        const code = `${role}-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+        localStorage.setItem("users", JSON.stringify(users));
+        alert(`✅ Purchased! Use code: ${code}`);
+        localStorage.setItem("roleCode", code);
+        coinCount.textContent = user.coins;
+      };
+
+      window.redeemCode = () => {
+        const input = document.getElementById("codeInput").value.trim();
+        const parts = input.split("-");
+        const role = parts[0];
+        if (roleColors[role]) {
+          user.role = role;
+          localStorage.setItem("users", JSON.stringify(users));
+          alert("✅ Role redeemed!");
+          location.reload();
+        } else {
+          alert("❌ Invalid code!");
+        }
+      };
+    });
+  </script>
 </body>
 </html>
