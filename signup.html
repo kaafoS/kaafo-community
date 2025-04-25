@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Sign Up</title>
   <style>
     body { text-align: center; font-family: Arial; margin-top: 100px; }
@@ -15,13 +16,13 @@
   <input type="date" id="date" />
   <input type="password" id="password" placeholder="Password" />
   <input type="password" id="confirm" placeholder="Confirm Password" />
-  <button onclick="register()">Sign Up</button>
+  <button id="signupBtn">Sign Up</button>
   <p class="error" id="error"></p>
   <p>Already have an account? <a href="signin.html">Sign In</a></p>
 
   <script>
-    function register() {
-      const username = document.getElementById("username").value.trim();
+    document.getElementById("signupBtn").addEventListener("click", () => {
+      const username = document.getElementById("username").value;
       const date = document.getElementById("date").value;
       const password = document.getElementById("password").value;
       const confirm = document.getElementById("confirm").value;
@@ -44,9 +45,9 @@
 
       users[username] = { password, date, coins: 100, role: "user" };
       localStorage.setItem("users", JSON.stringify(users));
-      alert("✅ Account created successfully!");
+      alert("Account created successfully!");
       window.location.href = "signin.html";
-    }
+    });
   </script>
 </body>
 </html>
