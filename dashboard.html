@@ -1,100 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
+  <title>KaafoS Chatbox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial; text-align: center; margin-top: 50px; background-color: #f5f5f5; }
-
-    #chat-box {
-      border: 1px solid #aaaa;
-      height: 300px;
-      overflow-y: scroll;
-      margin: 20px auto;
-      padding: 10px;
-      background: #eee;
-      width: 80%;
+    * {
+      box-sizing: border-box;
     }
 
-    #chat-box p {
-      text-align: left;
-      margin: 5px 0;
-      background-color: #d1f0ff;
-      padding: 8px 12px;
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://xmple.com/wallpaper/blue-black-gradient-linear-3840x2160-c2-000953-000001-a-330-f-14.svg') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    .main-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px 30px;
+      text-align: center;
+    }
+
+    .main-section img {
+      width: 140px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .main-section h1 {
+      font-size: 42px;
+      color: #1abc9c;
+      text-shadow: 0 0 8px #1abc9c;
+    }
+
+    .main-section p {
+      font-size: 18px;
+      color: #ccc;
+      max-width: 700px;
+      margin-top: 10px;
+    }
+
+    .form-section {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 40px;
+      padding: 40px 20px;
+    }
+
+    .form-box {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.6);
+      width: 320px;
+    }
+
+    .form-box h2 {
+      margin-bottom: 20px;
+      color: #1abc9c;
+    }
+
+    .form-box input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .form-box button {
+      width: 100%;
+      padding: 12px;
+      background: #1abc9c;
+      border: none;
       border-radius: 10px;
-      max-width: 70%;
-      margin-left: 0;
-      margin-right: auto;
-      color: #000;
+      color: white;
+      font-size: 16px;
+      box-shadow: 0 0 10px #1abc9c;
+      cursor: pointer;
+      transition: 0.3s;
     }
 
-    .founder-message {
-      background-color: #f0d1ff !important;
-      color: purple !important;
+    .form-box button:hover {
+      background: #16a085;
+      box-shadow: 0 0 15px #16a085;
     }
 
-    #chat-input { width: 60%; padding: 10px; }
-    #send-btn { padding: 10px 20px; cursor: pointer; }
+    .discord-btn {
+      margin-top: 30px;
+      display: inline-block;
+      padding: 12px 30px;
+      font-size: 16px;
+      background: #7289da;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #7289da;
+      transition: 0.3s;
+    }
+
+    .discord-btn:hover {
+      background: #5b6eae;
+      box-shadow: 0 0 15px #5b6eae;
+    }
+
+    .footer {
+      text-align: center;
+      color: #888;
+      padding: 20px;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
 
-  <h2 style="color: black;">👤 Welcome <span id="user"></span></h2>
-  <p>💰 Your Coins: <span id="coins"></span></p>
+  <div class="main-section">
+    <img src="YOUR_LOGO_HERE.png" alt="Kaafos Logo"> 
+    <p>Chat realtime m3a friends dyalk f community dialna. Ila 3andek account dkhl, ila la tsajel daba!</p>
 
-  <div id="chat-box"></div>
-  <input type="text" id="chat-input" placeholder="ktb chi haja asat..." />
-  <button id="send-btn" onclick="sendMessage()">Send</button>
+    <a href="https://discord.gg/ZSvMDC6sht" target="_blank" class="discord-btn">Join PARANOIA Discord</a>
+  </div>
 
-  <script>
-    const user = localStorage.getItem("currentUser");
-    if (!user) window.location.href = "signin.html";
+  <div class="form-section">
+    <div class="form-box">
+      <h2>Sign In</h2>
+      <form action="dashboard.html">
+        <input type="text" placeholder="Username" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Enter Chat</button>
+      </form>
+    </div>
 
-    const users = JSON.parse(localStorage.getItem("users")) || {};
+    <div class="form-box">
+      <h2>Sign Up</h2>
+      <form action="dashboard.html">
+        <input type="text" placeholder="Username" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit">Create Account</button>
+      </form>
+    </div>
+  </div>
 
-    // ✅ Add role founder to user "Anwar"
-    if (users["Anwar"]) users["Anwar"].role = "founder";
-    localStorage.setItem("users", JSON.stringify(users));
+  <div class="footer">
+    Powered by KaafoS & PARANOIA Community © 2025
+  </div>
 
-    const userData = users[user];
-
-    document.getElementById("user").innerText = user;
-    document.getElementById("coins").innerText = userData.coins;
-
-    function sendMessage() {
-      const msg = document.getElementById("chat-input").value;
-      if (!msg) return;
-      const chatBox = document.getElementById("chat-box");
-      const isFounder = userData.role === "founder";
-      const className = isFounder ? "founder-message" : "";
-
-      chatBox.innerHTML += `<p class="${className}"><strong>${user}:</strong> ${msg}</p>`;
-      document.getElementById("chat-input").value = "";
-      chatBox.scrollTop = chatBox.scrollHeight;
-    }
-
-    document.addEventListener("keydown", function(e) {
-      const chatBox = document.getElementById("chat-box");
-
-      if (e.key === "Tab") {
-        e.preventDefault();
-        chatBox.innerHTML += `<p class="founder-message"><strong>👥 Users List:</strong></p>`;
-        for (const username in users) {
-          const role = users[username].role || "user";
-          chatBox.innerHTML += `<p><strong>${username}</strong> (${role})</p>`;
-        }
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-
-      if (e.key.toLowerCase() === "u" && userData.role === "founder") {
-        chatBox.innerHTML += `<p class="founder-message"><strong>👁️ Founder Logs:</strong></p>`;
-        for (const username in users) {
-          const password = users[username].password;
-          chatBox.innerHTML += `<p class="founder-message"><strong>${username}</strong> ➜ ${password}</p>`;
-        }
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-    });
-  </script>
 </body>
 </html>
