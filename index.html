@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Anwar Testing Server</title>
+    <style>
+      body {
+        background: url('https://images.pexels.com/photos/1367192/pexels-photo-1367192.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        position: relative;
+      }
+
+  
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6); 
+        z-index: -1;
+      }
+
+
+      h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #fff;
+        padding: 20px 50px;
+        text-align: center;
+        font-size: 3em;
+        font-weight: bold;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        margin: 40px 0; 
+        position: relative;
+        background: rgba(0, 0, 0, 0.5); 
+        border: 3px solid #fff;
+      }
+
+
+      .summaries-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+        z-index: 1;
+      }
+
+      details {
+        text-align: center;
+      }
+
+      summary {
+        color: aliceblue;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        animation: fadeIn 3s both;
+        transition: all 0.3s ease;
+      }
+
+      summary:hover {
+        transform: scale(1.1);
+        color: #ffffff;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .groupe {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      button {
+        padding: 15px;
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      .discord-link {
+  margin-top: 20px;
+  text-align: center;
+  z-index: 1;
+}
+
+.discord-link button {
+  color: rgb(77, 77, 245); /* text color */
+  background-color: #000000; /* optional: background dyal button */
+  border: 2px solid rgb(189, 189, 189); /* optional: border */
+}
+
+
+      .discord-logo:hover {
+        transform: scale(1.1);
+      }
+
+    </style>
+  </head>
+  <body>
+
+
+    <h1>Kafoos community  
+
+
+    <div class="summaries-container">
+      <details>
+        <summary>Click here to Enter</summary>
+        <div class="groupe">
+          <form action="Login.html" method="GET">
+            <button type="submit">
+              Enter Main Chat
+            </button>
+          </form>
+        </div>
+      </details>
+    </div>
+
+    <div class="discord-link">
+      <form action="https://discord.gg/ZSvMDC6sht" method="get" target="_blank">
+        <button type="submit">Join Discord</button>
+      </form>
+    </div>        
+
+  </body>
+</html>

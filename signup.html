@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6c7ae0, #5f6368);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            animation: backgroundAnimation 10s ease-in-out infinite;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(135deg, #6c7ae0, #5f6368); }
+            50% { background: linear-gradient(135deg, #ff7e5f, #feb47b); }
+            100% { background: linear-gradient(135deg, #6c7ae0, #5f6368); }
+        }
+
+        .login {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .login:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login input[type="text"],
+        .login input[type="email"],
+        .login input[type="password"],
+        .login input[type="date"] {
+            display: block;
+            margin-bottom: 20px;
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .login input:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            background-color: #388e3c;
+        }
+
+        .label {
+            color: black;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .label a {
+            color: blue;
+            text-decoration: none;
+        }
+
+        .custom-input:focus,
+        .custom-date:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+<div class="login">
+    <h2>Create your account</h2>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="email" id="email" placeholder="Email" class="custom-input" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="password" id="passwordConfirm" placeholder="Password again" required>
+    <input type="date" id="birthdate" placeholder="Choose a date" class="custom-date" required>
+    <button onclick="register()">Sign Up</button>
+</div>
+
+<script>
+    function register() {
+
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const passwordConfirm = document.getElementById('passwordConfirm').value;
+        const birthdate = document.getElementById('birthdate').value;
+
+        if (!username || !email || !password || !passwordConfirm || !birthdate) {
+            alert('Please fill in all fields.');
+            return;
+        }
+
+        if (password !== passwordConfirm) {
+            alert('Passwords do not match.');
+            return;
+        }
+
+        localStorage.setItem('username', username);
+        localStorage.setItem('email', email);
+        localStorage.setItem('password', password);
+      
+        alert('Registration successful!');
+        window.location.href = "Login.html";
+    }
+</script>
+
+</body>
+</html>

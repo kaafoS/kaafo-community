@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chatbox</title>
+  <style>
+    body {
+      display: flex;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      background: #36393f;
+    }
+    .sidebar {
+      width: 260px;
+      background: #2f3136;
+      color: #fff;
+      padding: 20px;
+    }
+    .sidebar h2 { margin-bottom: 10px; }
+    .user-list { list-style: none; padding: 0; margin: 0; }
+    .user-list li { padding: 5px 0; font-size: 14px; }
+    .main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    .chat-box {
+      flex-grow: 1;
+      overflow-y: auto;
+      margin-bottom: 10px;
+      padding-right: 10px;
+    }
+    .message {
+      background: #2f3136;
+      margin-bottom: 16px;
+      padding: 10px 15px;
+      border-radius: 12px;
+      color: #dcddde;
+      max-width: 70%;
+    }
+    .chat-input-area {
+      display: flex;
+      padding-top: 10px;
+    }
+    .chat-input {
+      flex-grow: 1;
+      padding: 12px;
+      border-radius: 8px;
+      background: #40444b;
+      border: none;
+      color: white;
+    }
+    .chat-input::placeholder { color: #aaa; }
+    .send-button {
+      padding: 12px 20px;
+      background: #7289da;
+      border: none;
+      border-radius: 8px;
+      margin-left: 10px;
+      color: white;
+      cursor: pointer;
+    }
+    .store-button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff416c, #ff4b2b);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* Farming Chat button style */
+    .farming-chat-button {
+      background: #202225;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .store { display: none; margin-top: 10px; }
+    .store-item {
+      background: #202225;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .redeem-section {
+      margin-top: 15px;
+    }
+    input[type="text"] {
+      padding: 6px;
+      border-radius: 5px;
+      background: #40444b;
+      border: none;
+      color: white;
+    }
+    .redeem-button {
+      padding: 6px 12px;
+      background: #43b581;
+      border: none;
+      border-radius: 6px;
+      margin-left: 5px;
+      color: white;
+    }
+    /* Special style for farming chat */
+    #farmingChat {
+      background: #202225;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>👥 Users</h2>
+    <ul class="user-list"></ul>
+    <hr/>
+    <p><b>👤 Username:</b> <span id="usernameDisplay"></span></p>
+    <p><b>🪙 Coins:</b> <span id="coin-count"></span></p>
+
+    <button class="store-button" onclick="toggleStore()">🛒 Open Store</button>
+    <div id="store" class="store">
+      <div class="store-item">Member - 50k <button onclick="buyRole('Member')">Buy</button></div>
+      <div class="store-item">VIP - 120k <button onclick="buyRole('VIP')">Buy</button></div>
+      <div class="store-item">Admin - 600k <button onclick="buyRole('Admin')">Buy</button></div>
+      <div class="store-item">Geron - 1M <button onclick="buyRole('Geron')">Buy</button></div>
+      <div class="redeem-section">
+        <input type="text" id="codeInput" placeholder="Enter code" />
+        <button class="redeem-button" onclick="redeemCode()">Redeem</button>
+      </div>
+    </div>
+
+    <button class="store-button" onclick="toggleSettings()">⚙️ Settings</button>
+    <div id="settings" class="store">
+      <div class="store-item">
+        🔙 <b>Sign Out</b>
+        <button onclick="signOut()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="chat-box" id="chat"></div>
+    <div class="chat-input-area">
+      <input type="text" class="chat-input" placeholder="Type your message..." />
+      <button class="send-button">Send</button>
+    </div>
+
+    <!-- 🆕 Farming Chat -->
+    <div id="farmingChat"></div>
+  </div>
+
+  <!-- Farming Chat button t7t Store button -->
+  <button class="farming-chat-button" onclick="goToFarmingChat()">🌾 Farming Chat</button>
+
+  <script>
+    // Function to navigate to farming chat page
+    function goToFarmingChat() {
+      window.location.href = "farming.html";
+    }
+
+    const roleColors = {
+      "user": "#aaa",
+      "Member": "#00bfff",
+      "VIP": "gold",
+      "Admin": "#ff5e5e",
+      "Geron": "purple"
+    };
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const username = localStorage.getItem("currentUser");
+      if (!username) return window.location.href = "Login.html";
+
+      const users = JSON.parse(localStorage.getItem("users")) || {};
+      if (!users[username]) {
+        alert("User not found!");
+        window.location.href = "Login.html";
+        return;
+      }
+
+      const user = users[username];
+      const chat = document.getElementById("chat");
+      const userList = document.querySelector(".user-list");
+      const coinCount = document.getElementById("coin-count");
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const chatInput = document.querySelector(".chat-input");
+      const sendBtn = document.querySelector(".send-button");
+      const farmingChat = document.getElementById("farmingChat");
+
+      usernameDisplay.textContent = username;
+      coinCount.textContent = user.coins;
+
+      const userLi = document.createElement("li");
+      userLi.innerHTML = `<span style="color:${roleColors[user.role]}">@${username} [${user.role}]</span>`;
+      userList.appendChild(userLi);
+
+      const welcome = document.createElement("div");
+      welcome.className = "message";
+      welcome.innerHTML = `<b style="color:${roleColors[user.role]}">@${username}</b> Salam 3likom 🙌`;
+      chat.appendChild(welcome);
+
+      sendBtn.addEventListener("click", () => {
+        const msg = chatInput.value.trim();
+        if (!msg) return;
+
+        if (msg.length > 80) {
+          alert("❌ Sir l'farming chat ila bghiti coins!");
+          return;
+        }
+
+        const cost = msg.length;
+        if (user.coins < cost) {
+          alert("❌ Ma3ndkch coins kafiya!");
+          return;
+        }
+
+        const newMsg = document.createElement("div");
+        newMsg.className = "message";
+        newMsg.innerHTML = `<b style="color:${roleColors[user.role]}">@${username}</b> ${msg}`;
+        chat.appendChild(newMsg);
+        chat.scrollTop = chat.scrollHeight;
+
+        user.coins = user.coins - cost + msg.length * 10;
+        localStorage.setItem("users", JSON.stringify(users));
+        coinCount.textContent = user.coins;
+        chatInput.value = "";
+      });
+
+      window.toggleStore = () => {
+        const store = document.getElementById("store");
+        store.style.display = store.style.display === "none" ? "block" : "none";
+      };
+
+      window.buyRole = (role) => {
+        const prices = { Member: 50000, VIP: 120000, Admin: 600000, Geron: 1000000 };
+        if (user.coins < prices[role]) {
+          alert("❌ Not enough coins!");
+          return;
+        }
+        user.coins -= prices[role];
+        const code = `${role}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;
+        localStorage.setItem("roleCode", code);
+        localStorage.setItem("users", JSON.stringify(users));
+        alert(`✅ Purchased! Use code: ${code}`);
+        coinCount.textContent = user.coins;
+      };
+
+      window.redeemCode = () => {
+        const input = document.getElementById("codeInput").value.trim();
+        const parts = input.split("-");
+        const role = parts[0];
+        if (roleColors[role]) {
+          user.role = role;
+          localStorage.setItem("users", JSON.stringify(users));
+          alert("✅ Role redeemed!");
+          location.reload();
+        } else {
+          alert("❌ Invalid code!");
+        }
+      };
+
+      window.toggleSettings = () => {
+        const settings = document.getElementById("settings");
+        settings.style.display = settings.style.display === "none" ? "block" : "none";
+      };
+
+      window.signOut = () => {
+        localStorage.removeItem("currentUser");
+        window.location.href = "index.html";
+      };
+
+      // Farming chat auto-clear every 3 seconds
+      setInterval(() => {
+        farmingChat.innerHTML = "";
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
